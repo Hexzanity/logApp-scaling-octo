@@ -1,8 +1,33 @@
 <?php
-  
+	require('config/config.php');
+  require('config/db.php');
 
 
+  if(isset($_POST['submit'])){
+    $name = htmlentities($_POST['username']);
+    $pass = htmlentities($_POST['password']);
+    $sql = "SELECT * from account where user='$name' AND password='$pass'";
 
+    $result = mysqli_query($conn,$sql);
+    $rows = mysqli_num_rows($result);
+    if($rows ==1){
+      header('Location: guestbook-list.php');
+      $row = mysqli_fetch_assoc($result);
+      $_SESSION['username'] = $row['user'];
+
+    } else {
+      echo '
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" style="background-color:#ff9999;">
+      <strong style="color:Black">Couldn\'t find account</strong>
+      <p class="mb-0" style="color:#b30000">Please make sure Username or Password is Correct!<p>
+      <button style="color:Black" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      ';
+      
+      }
+    }
 ?>
 <?php include('inc/header.php'); ?>
   <br/>

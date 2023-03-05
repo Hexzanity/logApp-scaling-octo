@@ -1,3 +1,3 @@
 <?php
-   # destroy session
+     header('Location: guestbook-login.php');
 ?>

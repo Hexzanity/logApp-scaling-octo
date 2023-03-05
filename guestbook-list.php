@@ -1,5 +1,9 @@
 <?php
+        require('config/config.php');
+        require('config/db.php');
 
+            $sql = "SELECT id,lastname, firstname,address,log_date from person";
+            $result = mysqli_query($conn,$sql);
 ?>
 
 <?php include('inc/header.php'); ?>
@@ -19,13 +23,13 @@
 		
 			<div class="well">
                 <tbody>
-                <?php foreach($persons as $person) : ?>
+                <?php foreach($result as $person) : ?>
                     <tr>
-                    <th scope="row"><?php echo $person['pid'];?></th>
+                    <th scope="row"><?php echo $person['id'];?></th>
                     <td><?php echo $person['lastname'];?></td>
                     <td><?php echo $person['firstname'];?></td>
                     <td><?php echo $person['address'];?></td>
-                    <td><?php echo $person['logdt'];?></td>
+                    <td><?php echo $person['log_date'];?></td>
                     </tr>
                 <?php endforeach; ?>   
                 </tbody>
