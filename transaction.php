@@ -45,16 +45,16 @@
     $pfirstr = ($page-1) *$nresults;
 
     if (strlen($search) > 0){
-        $query = 'SELECT transaction.id,transaction.datelog, transaction.documentcode, transaction.action, employee.firstname 
+        $query = 'SELECT transaction.id, transaction.datelog, transaction.documentcode, transaction.action, employee.firstname 
         as office_name, CONCAT(employee.lastname,", ", employee.firstname) AS employee_fullname, transaction.remarks  
-        FROM c.transaction, c.employee, c.office
+        FROM transaction, employee, office
         WHERE transaction.employee_id=employee.id and transaction.office_id=office.id 
         and transaction.documentcode='. $search . ' ORDER BY transaction.documentcode, transaction.datelog LIMIT ' . $pfirstr . ',' . $nresults;
 
     }else{
         $query = 'SELECT transaction.id,transaction.datelog, transaction.documentcode, transaction.action, office.name 
         as office_name, CONCAT(employee.lastname,", ", employee.firstname) AS employee_fullname, transaction.remarks  
-        FROM c.transaction, c.employee, c.office
+        FROM transaction, employee, office
         WHERE transaction.employee_id=employee.id and transaction.office_id=office.id ORDER BY transaction.documentcode, transaction.datelog LIMIT ' . $pfirstr . ',' . $nresults;
     }
 
