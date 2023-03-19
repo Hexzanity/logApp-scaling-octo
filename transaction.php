@@ -22,13 +22,33 @@
 
 <?php 
     require("config/db.php");
+    require 'vendor/autoload.php';
+$faker = Faker\Factory::create();
+$db = mysqli_connect("localhost","root","Loveisshit143","recordsapp");
+$result = $db->query("SELECT COUNT(*) FROM transaction");
+$row = $result->fetch_row();
+$num_rows = $row[0];
+if ($num_rows < 200) {
+    $db->query("UPDATE FROM transaction");
+    for ($i=$num_rows; $i < 200; $i++){
+        $date = $faker->datetime('now');
+        $dates = $date->format('Y-m-d H:i:s');
+        $db->query("
+            INSERT INTO office (employee_id, office_id, datelog, action, remarks, documentcode)
+            VALUES ('$faker->randomDigitNotNull','$faker->randomDigitNotNull','$dates',
+            '$faker->randomElement(['IN','OUT','COMPLETE'])','$faker->randomElement(['Signed', 'For Approval'])',
+            '$faker->randomElement(['100', '101'])')
+        ");
+    }
+} else {
+}
     if (!isset ($_GET['search']) ) {  
         $search = "";  
     } else {  
         $search = $_GET['search'];   
     }
     
-    $nresults = 25;
+    $nresults = 10;
 
     $query = "SELECT * FROM transaction";
     $r = mysqli_query($db,$query);

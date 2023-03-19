@@ -1,3 +1,28 @@
+<?php
+    require("config/db.php");
+
+    require_once 'vendor/autoload.php';
+    $faker = Faker\Factory::create();
+    $db = mysqli_connect("localhost","root","Loveisshit143","recordsapp");
+    
+    $result = $db->query("SELECT COUNT(*) FROM employee");
+    $row = $result->fetch_row();
+    $num_rows = $row[0];
+    
+    if ($num_rows < 200) {
+        $db->query("UPDATE FROM employee");
+    
+        for ($i=$num_rows; $i < 200; $i++){
+            $db->query("
+                INSERT INTO employee (lastname, firstname, office_id, address)
+                VALUES ('$faker->lastName','$faker->firstName','$faker->randomDigitNotNull','$faker->address')
+            ");
+        }
+    } else {
+
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +42,6 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="assets/css/demo.css" rel="stylesheet" />
 </head>
-
 <?php 
     require("config/db.php");
 
@@ -28,7 +52,7 @@
     }
 
 
-    $nresults = 25;
+    $nresults = 10;
 
     $query = "SELECT * FROM employee";
     $r = mysqli_query($db,$query);
@@ -95,8 +119,8 @@
                                 </div>        
                                 </br>
                                 <div class="card-header ">
-                                    <h4 class="card-title">Employees</h4>
-                                    <p class="card-category">List of Employees: </p>
+                                    <h4 class="card-title">Employee</h4>
+                                    <p class="card-category">We are the Employees</p>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
                                     <table class="table table-hover table-striped">
@@ -127,7 +151,7 @@
                     </div>      
                   <?php 
                   for($page = 1; $page<= $numberOfPage; $page++) {  
-                      echo '<a href = "employee.php?page=' . $page . '">' . $page . ' </a>';  
+                      echo '<a href = "employee.php?page=' . $page . '">'. $page . '&nbsp;&nbsp;&nbsp; </a>';  
                   }
                   ?> 
                 

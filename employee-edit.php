@@ -21,7 +21,6 @@
 <body>
 <?php 
   require('config/db.php');
- 
     $id = $_GET['id'];
 
 

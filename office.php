@@ -1,3 +1,25 @@
+<?php
+require 'vendor/autoload.php';
+$faker = Faker\Factory::create();
+$db = mysqli_connect("localhost","root","Loveisshit143","recordsapp");
+
+$result = $db->query("SELECT COUNT(*) FROM office");
+$row = $result->fetch_row();
+$num_rows = $row[0];
+
+if ($num_rows < 200) {
+    $db->query("UPDATE FROM office");
+
+    for ($i=$num_rows; $i < 200; $i++){
+        $db->query("
+            INSERT INTO office (name, contactnum, email, address, city, country, postal)
+            VALUES ('$faker->company','$faker->e164PhoneNumber','$faker->email',
+            '$faker->address','$faker->city','$faker->country','$faker->postcode')
+        ");
+    }
+} else {
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +51,7 @@
         $search = $_GET['search'];   
     }
 
-    $nresults = 25;
+    $nresults = 10;
 
     $query = "SELECT * FROM office";
     $query = "SELECT * FROM employee";
@@ -129,7 +151,7 @@
                 </div>
                 <?php 
                   for($page = 1; $page<= $numberOfPage; $page++) {  
-                      echo '<a href = "office.php?page=' . $page . '">' . $page . ' </a>';  
+                      echo '<a href = "office.php?page=' . $page . '">' . $page . '&nbsp;&nbsp;&nbsp; </a>';  
                   }
                   ?> 
             </div>
